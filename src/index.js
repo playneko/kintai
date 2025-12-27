@@ -2,12 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import HeaderNav from "./HeaderNav";
+import BottomNav from "./BottomNav";
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <HeaderNav />
+      <BottomNav />
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 );
 
