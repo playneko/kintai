@@ -4,7 +4,7 @@ import '../assets/Home.css';
 
 function Home() {
   dayjs.locale('ja');
-  const [selectedDate, setSelectedDate] = useState(dayjs().toDate()); // 현재 선택된 날짜
+  const [selectedDate] = useState(dayjs().toDate()); // 현재 선택된 날짜
 
   const formatDate = (createdAt) => {
     return dayjs(createdAt).format("YYYY年 MM月 DD日");
@@ -13,7 +13,7 @@ function Home() {
   return (
     <div className="App">
       <div className="home-container">
-        <h1>{formatDate(selectedDate)}</h1>
+        {formatDate(selectedDate)}
       </div>
     </div>
   );

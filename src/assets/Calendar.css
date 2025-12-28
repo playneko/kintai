@@ -1,0 +1,73 @@
+abbr {
+  text-decoration: none;
+}
+
+.react-calendar {
+  margin-top: 80px;
+}
+
+.react-calendar__navigation {
+  display: none;
+}
+
+.react-calendar__tile--hidden {
+  display: none !important;
+}
+
+.react-calendar__month-view__weekdays {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.react-calendar__month-view__weekdays > div:nth-child(1) {
+  color:#F02B24;
+}
+
+.react-calendar__month-view__weekdays > div:nth-child(7) {
+  color:#2446F0;
+}
+
+.react-calendar__month-view__days > .react-calendar__tile {
+  height: 30px;
+  border: 0px;
+}
+
+.calendar-date {
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.calendar-nav {
+  position: absolute;
+  top: 50px;
+  left: 8px;
+  gap: 12px;
+  display: flex;
+  align-items: center;
+  justify-self: anchor-center;
+}
+
+.calendar-controls button {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: inherit;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.calendar-tabs button {
+  background: transparent;
+  border: none;
+  color: inherit;
+  padding: 4px 8px;
+}
+
+.calendar-tabs button.active {
+  border-bottom: 2px solid #61dafb;
+}
+
+.today-highlight {
+  border-radius: 5px;
+  background: #79bcfb;
+}

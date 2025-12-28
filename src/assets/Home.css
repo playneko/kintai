@@ -1,5 +1,11 @@
 .home-container {
-  margin-top: 50px;
-  color: #848484;
+  margin-top: 70px;
+  color: #ffffff;
+  font-weight: bold;
   text-align: center;
+  padding: 15px;
+  margin-left: 25px;
+  margin-right: 25px;
+  border-radius: 7px;
+  background: #2486F0;
 }
