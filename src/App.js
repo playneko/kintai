@@ -9,18 +9,16 @@ import './assets/App.css';
 
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <HeaderNav />
-        <BottomNav />
-				<Routes>
-					<Route path="/" element={<Home />}></Route>
-					<Route path="/home" element={<Home />}></Route>
-					<Route path="/kintai/*" element={<Kintai />}></Route>
-					<Route path="*" element={<NotFound />}></Route>
-				</Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <HeaderNav />
+      <BottomNav />
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/home" element={<Home />}></Route>
+        <Route path="/kintai/*" element={<Kintai />}></Route>
+        <Route path="*" element={<NotFound />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

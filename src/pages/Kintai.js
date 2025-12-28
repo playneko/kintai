@@ -4,7 +4,7 @@ import '../assets/App.css';
 
 function Kintai() {
   return (
-    <div className="App">
+    <div>
       <CalendarNav />
     </div>
   );

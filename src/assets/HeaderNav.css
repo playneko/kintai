@@ -6,10 +6,15 @@
   right: 0;
   height: 45px;
   text-align: center;
-  background: #584747;
+  background: #2a2a2a;
 }
 .header-nav-item {
-  color: white !important;
+  color: #fff !important;
   line-height: 45px;
   font-size: 18px;
+  font-weight: 900;
+}
+.header-logo {
+  font-size: 20px;
+  margin-right: 10px;
 }

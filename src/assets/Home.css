@@ -1,11 +1,12 @@
 .home-container {
-  margin-top: 70px;
-  color: #ffffff;
+  top: 45px;
+  color: #646464;
   font-weight: bold;
   text-align: center;
   padding: 15px;
   margin-left: 25px;
   margin-right: 25px;
   border-radius: 7px;
-  background: #2486F0;
+  background: #F0B724;
+  position: relative;
 }

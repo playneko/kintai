@@ -6,6 +6,7 @@
   right: 0;
   height: 45px;
   text-align: center;
+  background: #d2d2d2;
 }
 
 /* nav태그 아래의 자식들을 수평정렬하기 위한 설정 */

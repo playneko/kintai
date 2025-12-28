@@ -1,11 +1,24 @@
 import React from "react";
 import "./assets/HeaderNav.css";
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./components/FontAwesome";
 
 const HeaderNav = () => {
   return (
-    <nav className="header-nav">
-      <div className="header-nav-item">スマート勤怠</div>
-    </nav>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar variant="dense">
+          <FontAwesomeIcon icon="rocket" className="header-logo" />
+          <Typography variant="h6" component="div">
+            スマート勤怠
+          </Typography>
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
 };
 
