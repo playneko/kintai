@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import './App.css';
 import dayjs from 'dayjs';
 import Calendar from 'react-calendar';
 import CalendarTab from './CalendarTab';
+import '../assets/App.css';
 import 'dayjs/locale/ja';
 
 function CalendarNav() {
