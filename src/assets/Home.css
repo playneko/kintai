@@ -1,12 +1,47 @@
+.home-main {
+  width: 100%;
+  background-color: inherit;
+  border: none;
+  overflow-y: auto;
+}
 .home-container {
-  top: 45px;
+  /* top: 45px; */
   color: #646464;
   font-weight: bold;
   text-align: center;
   padding: 15px;
+  margin-top: 35px;
   margin-left: 25px;
   margin-right: 25px;
   border-radius: 7px;
   background: #F0B724;
   position: relative;
+}
+.home-input {
+  /* top: 100px; */
+  margin-top: 25px;
+  margin-bottom: 60px;
+  margin-left: 20px;
+  margin-right: 20px;
+  position: relative;
+}
+.home-workdate {
+  font-size: 14px;
+  text-align: left;
+  font-weight: bold;
+  margin-left: 10px;
+}
+.home-datetime {
+  font-size: 14px;
+  text-align: left;
+  font-weight: bold;
+  margin-top: 15px;
+  margin-left: 10px;
+}
+.home-bottom {
+  display: flex;
+}
+.home-bottom > div {
+  margin: auto;
+  margin-top: 10px;
 }

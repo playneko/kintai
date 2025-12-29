@@ -5,14 +5,16 @@
   left: 0;
   right: 0;
   height: 45px;
+  z-index: 9999;
+  font-size: x-large;
   text-align: center;
-  background: #d2d2d2;
+  background: #ffffff;
 }
 
 /* nav태그 아래의 자식들을 수평정렬하기 위한 설정 */
 nav {
   overflow: hidden;
-  border-top: 1px solid grey;
+  /* border-top: 1px solid grey; */
 }
 /* nav태그 아래의 div태그들을 수평정렬 및 세로길이 설정 */
 .nav-link {
@@ -33,7 +35,7 @@ nav {
 
 /* 하단 네비바의 메뉴를 눌렀을 때 색상 변경*/
 .active {
-  color: #52a7d2;
+  color: #ff8282;
 }
 
 .wrapper > div > div {

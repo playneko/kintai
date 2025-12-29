@@ -11,7 +11,7 @@ const HeaderNav = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar variant="dense">
+        <Toolbar variant="dense" className="header-main">
           <FontAwesomeIcon icon="rocket" className="header-logo" />
           <Typography variant="h6" component="div">
             スマート勤怠
