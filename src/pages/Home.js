@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import InputAdornment from '@mui/material/InputAdornment';
+import useFetcher from '../hook/useFetcher';
 import useCalendarHook from '../hook/useCalendar';
 import useCalendarStore from '../store/calendarStore';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,13 +15,19 @@ import '../assets/Home.css';
 
 function Home() {
   dayjs.locale('ja');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [message, setMessage] = useState('');
   const calendarData = useCalendarStore((state) => state);
   const setInputStart = useCalendarStore((state) => state.setInputStart);
   const setInputEnd = useCalendarStore((state) => state.setInputEnd);
   const setInputReset = useCalendarStore((state) => state.setInputReset);
+  const fetchData = useFetcher();
 
   // データ変更チェック
   useCalendarHook();
+
+  const API_KINTAI_ADD_URL = process.env.REACT_APP_API_KINTAI_ADD_URL || process.env.API_KINTAI_ADD_URL || '';
 
   const formatDate = (createdAt) => {
     return dayjs(createdAt).format("YYYY年 MM月 DD日");
@@ -40,6 +47,31 @@ function Home() {
 
   const handleResetTimeChange = (event) => {
     setInputReset(event.target.value);
+  }
+
+  const fetchKintaiAdd = () => {
+    const payload = {
+      uid: 'playneko',
+      date_year: dayjs(calendarData.thisDate).format('YYYY'),
+      date_month: dayjs(calendarData.thisDate).format('MM'),
+      date_day: dayjs(calendarData.thisDate).format('DD'),
+      everyday: inputDate(calendarData.thisDate),
+      opening_time_start: calendarData.inputStart,
+      opening_time_end: calendarData.inputEnd,
+      reset_time: calendarData.inputReset,
+      production: calendarData.inputProduction,
+      remarks: calendarData.inputRemarks,
+    };
+    setLoading(true);
+    fetchData(API_KINTAI_ADD_URL, 'POST', payload)
+      .then((data) => {
+        console.log('Success:', data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setMessage(error.body.msg || 'エラーが発生しました。');
+        setError(true);
+      });
   }
 
   const options = ['午前休', '午後休', '全休', '早退', '遅刻', '電車遅延'];
@@ -164,7 +196,16 @@ function Home() {
         </Box>
         <div className='home-bottom'>
           <Stack spacing={1} direction="row">
-            <Button variant="contained" color="primary">登録</Button>
+            {
+              loading ? <FontAwesomeIcon icon="spinner" spin /> : <Button variant="contained" color="brown" onClick={fetchKintaiAdd}>登録</Button>
+            }
+            {
+              error ?
+                <div>
+                    <span className="error-text">{message}</span>
+                    <Button variant="contained" color="brown" onClick={fetchKintaiAdd}>再登録</Button>
+                </div> : ""
+            }
           </Stack>
         </div>
       </div>

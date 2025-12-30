@@ -1,28 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
 import dayjs from 'dayjs';
 import Calendar from 'react-calendar';
 import CalendarTab from './CalendarTab';
+import useCalendarStore from '../store/calendarStore';
 import '../assets/Calendar.css';
 import 'dayjs/locale/ja';
 
 function CalendarNav() {
   dayjs.locale('ja');
-  const [selectedDate, setSelectedDate] = useState(dayjs().toDate()); // 현재 선택된 날짜
+  const calendarData = useCalendarStore((state) => state);
+  const setThisDate = useCalendarStore((state) => state.setThisDate);
 
-  // 날짜 변경 핸들러
+  // Ensure we have a Date object to pass into child components
+  const selectedDate = calendarData.thisDate ? dayjs(calendarData.thisDate).toDate() : new Date();
+
   const handleDateChange = (value) => {
-    setSelectedDate(dayjs(value).toDate());
+    setThisDate(dayjs(value).toString());
   };
 
-  // 타일 클래스 설정
   const tileClassName = ({ date, view }) => {
-    var thisDate = dayjs(selectedDate).toDate().toLocaleDateString('ja-JP');
-    var toDate = dayjs(date).toDate().toLocaleDateString('ja-JP');
-    if (thisDate === toDate) {
+    const tileDateStr = dayjs(date).format('YYYY-MM-DD');
+    const currentStr = dayjs(calendarData.thisDate || selectedDate).format('YYYY-MM-DD');
+    if (currentStr === tileDateStr) {
       return 'today-highlight'; // 오늘 날짜 강조 클래스
     }
-    const startOfWeek = dayjs(selectedDate).startOf('week').toDate();
-    const endOfWeek = dayjs(selectedDate).endOf('week').toDate();
+    const startOfWeek = dayjs(calendarData.thisDate || selectedDate).startOf('week').toDate();
+    const endOfWeek = dayjs(calendarData.thisDate || selectedDate).endOf('week').toDate();
     if (date < startOfWeek || date > endOfWeek) {
       return 'react-calendar__tile--hidden';
     }
@@ -31,14 +34,14 @@ function CalendarNav() {
 
   // 이전 버튼 핸들러
   const handlePrev = () => {
-    const newDate = dayjs(selectedDate).subtract(1, 'week').toDate() // 이전 주로 이동
-    setSelectedDate(newDate); // 선택된 날짜 업데이트
+    const newDateStr = dayjs(calendarData.thisDate || selectedDate).subtract(1, 'week').toString(); // 이전 주로 이동
+    setThisDate(newDateStr); // 선택된 날짜 업데이트
   };
 
   // 다음 버튼 핸들러
   const handleNext = () => {
-    const newDate = dayjs(selectedDate).add(1, 'week').toDate() // 다음 주로 이동
-    setSelectedDate(newDate); // 선택된 날짜 업데이트
+    const newDateStr = dayjs(calendarData.thisDate || selectedDate).add(1, 'week').toString(); // 다음 주로 이동
+    setThisDate(newDateStr); // 선택된 날짜 업데이트
   };
 
   return (
@@ -49,7 +52,7 @@ function CalendarNav() {
         handleNext={handleNext}
       />
       <Calendar
-        key={selectedDate.toString()}
+        key={selectedDate.getTime()}
         onChange={(value) => handleDateChange(value)}
         value={selectedDate}
         view='month'

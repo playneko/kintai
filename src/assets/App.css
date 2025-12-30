@@ -3,3 +3,6 @@
   background-color: inherit;
   border: none;
 }
+.error-text {
+  color: red;
+}
