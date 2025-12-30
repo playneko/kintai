@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import InputAdornment from '@mui/material/InputAdornment';
+import useCalendarHook from '../hook/useCalendar';
+import useCalendarStore from '../store/calendarStore';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import dayjs from 'dayjs';
 import "../components/FontAwesome";
@@ -12,22 +14,13 @@ import '../assets/Home.css';
 
 function Home() {
   dayjs.locale('ja');
+  const calendarData = useCalendarStore((state) => state);
+  const setInputStart = useCalendarStore((state) => state.setInputStart);
+  const setInputEnd = useCalendarStore((state) => state.setInputEnd);
+  const setInputReset = useCalendarStore((state) => state.setInputReset);
 
-  const [selectInputData, setSelectInputData] = useState({
-    thisDate: dayjs().toString(),
-    inputDate: '',
-    inputStart: '10:30',
-    inputEnd: '19:00',
-    inputReset: '1:00',
-    inputProduction: '社内業務支援ツールの開発',
-    inputRemarks: '',
-  });
-
-  // const [selectedDate] = useState(dayjs().toDate()); // 현재 선택된 날짜
-  // const [inputDateValue, setInputDateValue] = useState(); // 현재 선택된 날짜
-  // const [inputStart, setInputStart] = useState('10:30');
-  // const [inputEnd, setInputEnd] = useState('19:00');
-  // const [inputReset, setInputReset] = useState('1:00');
+  // データ変更チェック
+  useCalendarHook();
 
   const formatDate = (createdAt) => {
     return dayjs(createdAt).format("YYYY年 MM月 DD日");
@@ -38,39 +31,23 @@ function Home() {
   };
 
   const handleStartTimeChange = (event) => {
-    setSelectInputData({...selectInputData, inputStart: event.target.value});
+    setInputStart(event.target.value);
   }
 
   const handleEndTimeChange = (event) => {
-    setSelectInputData({...selectInputData, inputEnd: event.target.value});
+    setInputEnd(event.target.value);
   }
 
   const handleResetTimeChange = (event) => {
-    setSelectInputData({...selectInputData, inputReset: event.target.value});
+    setInputReset(event.target.value);
   }
-
-  useEffect(() => {
-    const dateStr = dayjs(selectInputData.thisDate).format('YYYY-MM-DD');
-    const resetParts = (selectInputData.inputReset || '0:00').split(':').map((v) => Number(v) || 0);
-    const resetMinutes = resetParts[0] * 60 + (resetParts[1] || 0);
-    const start = dayjs(`${dateStr} ${selectInputData.inputStart}`, 'YYYY-MM-DD HH:mm');
-    let end = dayjs(`${dateStr} ${selectInputData.inputEnd}`, 'YYYY-MM-DD HH:mm');
-    if (end.isBefore(start)) {
-      end = end.add(1, 'day');
-    }
-    let diffMinutes = end.diff(start, 'minute') - resetMinutes;
-    if (isNaN(diffMinutes) || diffMinutes < 0) diffMinutes = 0;
-    const hours = Math.floor(diffMinutes / 60);
-    const minutes = diffMinutes % 60;
-    setSelectInputData((prev) => ({...prev, inputDate: `${hours}:${minutes.toString().padStart(2, '0')}`}));
-  }, [selectInputData.inputStart, selectInputData.inputEnd, selectInputData.inputReset, selectInputData.thisDate]);
 
   const options = ['午前休', '午後休', '全休', '早退', '遅刻', '電車遅延'];
 
   return (
     <div className="home-main">
       <div className="home-container">
-        {formatDate(selectInputData.thisDate)}
+        {formatDate(calendarData.thisDate)}
       </div>
       <div className="home-input">
         <Box
@@ -84,7 +61,7 @@ function Home() {
             <TextField
               id="outlined-multiline-flexible"
               margin="dense"
-              defaultValue={inputDate(selectInputData.thisDate)}
+              defaultValue={inputDate(calendarData.thisDate)}
               slotProps={{
                 input: {
                   startAdornment: (
@@ -100,7 +77,7 @@ function Home() {
           <TextField
             id="outlined-multiline-flexible"
             margin="dense"
-            defaultValue={selectInputData.inputStart}
+            defaultValue={calendarData.inputStart}
             slotProps={{
               input: {
                 startAdornment: (
@@ -116,7 +93,7 @@ function Home() {
           <TextField
             id="outlined-multiline-flexible"
             margin="dense"
-            defaultValue={selectInputData.inputEnd}
+            defaultValue={calendarData.inputEnd}
             slotProps={{
               input: {
                 startAdornment: (
@@ -132,7 +109,7 @@ function Home() {
           <TextField
             id="outlined-multiline-flexible"
             margin="dense"
-            defaultValue={selectInputData.inputReset}
+            defaultValue={calendarData.inputReset}
             slotProps={{
               input: {
                 startAdornment: (
@@ -149,7 +126,7 @@ function Home() {
             id="outlined-multiline-flexible"
             margin="dense"
             disabled
-            defaultValue={selectInputData.inputDate}
+            defaultValue={calendarData.inputDate}
             slotProps={{
               input: {
                 startAdornment: (
@@ -164,7 +141,7 @@ function Home() {
           <TextField
             id="outlined-multiline-flexible"
             margin="dense"
-            defaultValue={selectInputData.inputProduction}
+            defaultValue={calendarData.inputProduction}
           />
           <div className='home-datetime'>備考</div>
           <Autocomplete
