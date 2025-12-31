@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import InputAdornment from '@mui/material/InputAdornment';
+import CircularProgress from '@mui/material/CircularProgress';
 import useFetcher from '../hook/useFetcher';
 import useCalendarHook from '../hook/useCalendar';
 import useCalendarStore from '../store/calendarStore';
@@ -15,57 +16,80 @@ import '../assets/Home.css';
 
 function Home() {
   dayjs.locale('ja');
+  const [isPosting, setIsPosting] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState('');
+  const [inputStart, setInputStart] = useState();
+  const [inputEnd, setInputEnd] = useState();
+  const [inputReset, setInputReset] = useState();
+  const [inputProduction, setInputProduction] = useState();
+  const [inputRemarks, setInputRemarks] = useState();
+  const [isUpdated, setIsUpdated] = useState();
+  const [calcDate, setCalcDate] = useState();
+
   const calendarData = useCalendarStore((state) => state);
-  const setInputStart = useCalendarStore((state) => state.setInputStart);
-  const setInputEnd = useCalendarStore((state) => state.setInputEnd);
-  const setInputReset = useCalendarStore((state) => state.setInputReset);
   const fetchData = useFetcher();
 
-  // データ変更チェック
-  useCalendarHook();
+  const API_KINTAI_GET_URL = process.env.REACT_APP_API_KINTAI_GET_URL || process.env.API_KINTAI_GET_URL || '';
+  const API_KINTAI_UPDATE_URL = process.env.REACT_APP_API_KINTAI_UPDATE_URL || process.env.API_KINTAI_UPDATE_URL || '';
 
-  const API_KINTAI_ADD_URL = process.env.REACT_APP_API_KINTAI_ADD_URL || process.env.API_KINTAI_ADD_URL || '';
-
+  // 日付フォーマット
   const formatDate = (createdAt) => {
     return dayjs(createdAt).format("YYYY年 MM月 DD日");
   };
 
+  // 入力日付フォーマット
   const inputDate = (createdAt) => {
     return dayjs(createdAt).format("YYYY/MM/DD");
   };
 
+  // 業務開始時間変更
   const handleStartTimeChange = (event) => {
     setInputStart(event.target.value);
   }
 
+  // 業務終了時間変更
   const handleEndTimeChange = (event) => {
     setInputEnd(event.target.value);
   }
 
+  // 休憩時間変更
   const handleResetTimeChange = (event) => {
     setInputReset(event.target.value);
   }
 
-  const fetchKintaiAdd = () => {
+  const initData = () => {
+    console.log('初期化');
+    setInputStart('10:30');
+    setInputEnd('19:00');
+    setInputReset('1:00');
+    setInputProduction('社内業務支援ツールの開発');
+    setInputRemarks('');
+    setIsUpdated(false);
+    setIsPosting(false);
+  }
+
+  // 勤怠登録/更新
+  const fetchKintaiUpdate = async () => {
     const payload = {
       uid: 'playneko',
       date_year: dayjs(calendarData.thisDate).format('YYYY'),
       date_month: dayjs(calendarData.thisDate).format('MM'),
       date_day: dayjs(calendarData.thisDate).format('DD'),
       everyday: inputDate(calendarData.thisDate),
-      opening_time_start: calendarData.inputStart,
-      opening_time_end: calendarData.inputEnd,
-      reset_time: calendarData.inputReset,
-      production: calendarData.inputProduction,
-      remarks: calendarData.inputRemarks,
+      opening_time_start: inputStart,
+      opening_time_end: inputEnd,
+      reset_time: inputReset,
+      production: inputProduction,
+      remarks: inputRemarks,
     };
+    setIsPosting(false);
     setLoading(true);
-    fetchData(API_KINTAI_ADD_URL, 'POST', payload)
+    fetchData(API_KINTAI_UPDATE_URL, 'POST', payload)
       .then((data) => {
         console.log('Success:', data);
+        setIsPosting(true);
         setLoading(false);
       })
       .catch((error) => {
@@ -73,6 +97,51 @@ function Home() {
         setError(true);
       });
   }
+
+  // 勤怠データ取得
+  const fetchKintaiData = async () => {
+    const payload = {
+      uid: 'playneko',
+      everyday: inputDate(calendarData.thisDate),
+    };
+
+    setLoading(true);
+    await fetchData(API_KINTAI_GET_URL, 'POST', payload)
+      .then((data) => {
+        if (data.success === true) {
+        console.log(data.rows);
+          if (data.rows[0]) {
+            const row = data.rows[0];
+            setInputStart(row.opening_time_start || '');
+            setInputEnd(row.opening_time_end || '');
+            setInputReset(row.reset_time || '');
+            setInputProduction(row.production || '');
+            setInputRemarks(row.remarks || '');
+            setIsUpdated(row.isUpdated || '');
+          }
+        } else {
+          initData();
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        setMessage(error.body.msg || 'エラーが発生しました。');
+        setError(true);
+      });
+  }
+
+  useEffect(() => {
+    fetchKintaiData();
+    return () => {};
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [calendarData.thisDate, fetchData]);
+
+  useEffect(() => {
+    // データ変更チェック
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const calcVal = useCalendarHook(calendarData.thisDate, inputStart, inputEnd, inputReset);
+    setCalcDate(calcVal);
+  }, [calendarData.thisDate, inputStart, inputEnd, inputReset, inputProduction]);
 
   const options = ['午前休', '午後休', '全休', '早退', '遅刻', '電車遅延'];
 
@@ -109,7 +178,7 @@ function Home() {
           <TextField
             id="outlined-multiline-flexible"
             margin="dense"
-            defaultValue={calendarData.inputStart}
+            defaultValue={inputStart}
             slotProps={{
               input: {
                 startAdornment: (
@@ -125,7 +194,7 @@ function Home() {
           <TextField
             id="outlined-multiline-flexible"
             margin="dense"
-            defaultValue={calendarData.inputEnd}
+            defaultValue={inputEnd}
             slotProps={{
               input: {
                 startAdornment: (
@@ -141,7 +210,7 @@ function Home() {
           <TextField
             id="outlined-multiline-flexible"
             margin="dense"
-            defaultValue={calendarData.inputReset}
+            defaultValue={inputReset}
             slotProps={{
               input: {
                 startAdornment: (
@@ -158,7 +227,7 @@ function Home() {
             id="outlined-multiline-flexible"
             margin="dense"
             disabled
-            defaultValue={calendarData.inputDate}
+            defaultValue={calcDate}
             slotProps={{
               input: {
                 startAdornment: (
@@ -173,7 +242,7 @@ function Home() {
           <TextField
             id="outlined-multiline-flexible"
             margin="dense"
-            defaultValue={calendarData.inputProduction}
+            defaultValue={inputProduction}
           />
           <div className='home-datetime'>備考</div>
           <Autocomplete
@@ -197,13 +266,13 @@ function Home() {
         <div className='home-bottom'>
           <Stack spacing={1} direction="row">
             {
-              loading ? <FontAwesomeIcon icon="spinner" spin /> : <Button variant="contained" color="brown" onClick={fetchKintaiAdd}>登録</Button>
+              loading ? <CircularProgress color="secondary" size="30px" /> : <Button variant="contained" color="brown" onClick={fetchKintaiUpdate}>{isUpdated ? "更新" : "登録"}</Button>
             }
             {
               error ?
                 <div>
                     <span className="error-text">{message}</span>
-                    <Button variant="contained" color="brown" onClick={fetchKintaiAdd}>再登録</Button>
+                    <Button variant="contained" color="brown" onClick={fetchKintaiUpdate}>再{isUpdated ? "更新" : "登録"}</Button>
                 </div> : ""
             }
           </Stack>

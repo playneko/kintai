@@ -10,8 +10,6 @@ function CalendarNav() {
   dayjs.locale('ja');
   const calendarData = useCalendarStore((state) => state);
   const setThisDate = useCalendarStore((state) => state.setThisDate);
-
-  // Ensure we have a Date object to pass into child components
   const selectedDate = calendarData.thisDate ? dayjs(calendarData.thisDate).toDate() : new Date();
 
   const handleDateChange = (value) => {
@@ -22,7 +20,7 @@ function CalendarNav() {
     const tileDateStr = dayjs(date).format('YYYY-MM-DD');
     const currentStr = dayjs(calendarData.thisDate || selectedDate).format('YYYY-MM-DD');
     if (currentStr === tileDateStr) {
-      return 'today-highlight'; // 오늘 날짜 강조 클래스
+      return 'today-highlight';
     }
     const startOfWeek = dayjs(calendarData.thisDate || selectedDate).startOf('week').toDate();
     const endOfWeek = dayjs(calendarData.thisDate || selectedDate).endOf('week').toDate();
@@ -34,14 +32,14 @@ function CalendarNav() {
 
   // 이전 버튼 핸들러
   const handlePrev = () => {
-    const newDateStr = dayjs(calendarData.thisDate || selectedDate).subtract(1, 'week').toString(); // 이전 주로 이동
-    setThisDate(newDateStr); // 선택된 날짜 업데이트
+    const newDateStr = dayjs(calendarData.thisDate || selectedDate).subtract(1, 'week').toString();
+    setThisDate(newDateStr);
   };
 
   // 다음 버튼 핸들러
   const handleNext = () => {
-    const newDateStr = dayjs(calendarData.thisDate || selectedDate).add(1, 'week').toString(); // 다음 주로 이동
-    setThisDate(newDateStr); // 선택된 날짜 업데이트
+    const newDateStr = dayjs(calendarData.thisDate || selectedDate).add(1, 'week').toString();
+    setThisDate(newDateStr);
   };
 
   return (

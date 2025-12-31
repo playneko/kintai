@@ -15,7 +15,7 @@ const BottomNav = () => {
           <Link to="/home" className="nav-link" onClick={() => setActiveNav(1)}>
             <div>
               <FontAwesomeIcon
-                icon="torii-gate"
+                icon="home"
                 className={activeNav === 1 ? "nav-item active" : "nav-item"}
               />
             </div>

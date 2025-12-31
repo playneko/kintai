@@ -9,6 +9,7 @@ const useCalendarStore = create((set) => ({
   inputReset: '1:00',
   inputProduction: '社内業務支援ツールの開発',
   inputRemarks: '',
+  isUpdated: false,
   setThisDate: (date) => set((state) => ({ ...state, thisDate: date })),
   setInputDate: (date) => set((state) => ({ ...state, inputDate: date })),
   setInputStart: (start) => set((state) => ({ ...state, inputStart: start })),
@@ -18,6 +19,7 @@ const useCalendarStore = create((set) => ({
     set((state) => ({ ...state, inputProduction: production })),
   setInputRemarks: (remarks) =>
     set((state) => ({ ...state, inputRemarks: remarks })),
+  setIsUpdated: (isUpdated) => set((state) => ({ ...state, isUpdated: isUpdated })),
 }));
 
 export default useCalendarStore;

@@ -1,7 +1,13 @@
 .kintai-card-content {
   margin: 0 auto;
   margin-top: 30px;
+  font-size: 15px;
+  font-weight: bold;
   text-align: center;
   justify-content: center;
   background: #e4e4e4 !important;
+}
+.kintai-card-content svg {
+  color: #795548;
+  margin-right: 5px;
 }
