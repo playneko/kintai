@@ -1,13 +1,37 @@
-.kintai-card-content {
+.kintai-alert {
+  margin-top: 25px;
+  margin-left: 25px;
+  margin-right: 25px;
+  font-weight: bold;
+}
+.kintai-card-content-update {
   margin: 0 auto;
   margin-top: 30px;
   font-size: 15px;
   font-weight: bold;
-  text-align: center;
+  text-align: left;
   justify-content: center;
   background: #e4e4e4 !important;
 }
-.kintai-card-content svg {
+.kintai-card-content-info {
+  margin: 0 auto;
+  margin-top: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: left;
+  justify-content: center;
+  background: #e4e4e4 !important;
+}
+.kintai-card-content-update svg {
   color: #795548;
   margin-right: 5px;
+}
+.kintai-card-content-info svg {
+  color: #ff6161;
+  margin-right: 5px;
+}
+.kintai-button {
+  margin: 0 auto;
+  margin-top: 20px;
+  text-align: center;
 }

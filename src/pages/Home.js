@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -25,7 +26,7 @@ function Home() {
   const [inputReset, setInputReset] = useState();
   const [inputProduction, setInputProduction] = useState();
   const [inputRemarks, setInputRemarks] = useState();
-  const [isUpdated, setIsUpdated] = useState();
+  const [isUpdated, setIsUpdated] = useState(false);
   const [calcDate, setCalcDate] = useState();
 
   const calendarData = useCalendarStore((state) => state);
@@ -88,7 +89,6 @@ function Home() {
     setLoading(true);
     fetchData(API_KINTAI_UPDATE_URL, 'POST', payload)
       .then((data) => {
-        console.log('Success:', data);
         setIsPosting(true);
         setLoading(false);
       })
@@ -117,7 +117,7 @@ function Home() {
             setInputReset(row.reset_time || '');
             setInputProduction(row.production || '');
             setInputRemarks(row.remarks || '');
-            setIsUpdated(row.isUpdated || '');
+            setIsUpdated(row.isUpdated || false);
           }
         } else {
           initData();
@@ -147,6 +147,13 @@ function Home() {
 
   return (
     <div className="home-main">
+      {
+        isPosting ? 
+          <Alert variant="filled" severity="info" className="home-alert">
+            勤怠登録/更新が完了しました。
+          </Alert>
+        : ""
+      }
       <div className="home-container">
         {formatDate(calendarData.thisDate)}
       </div>
@@ -245,11 +252,15 @@ function Home() {
             defaultValue={inputProduction}
           />
           <div className='home-datetime'>備考</div>
+          <div className='home-remarks-info'>{inputRemarks}</div>
           <Autocomplete
             freeSolo
             disablePortal
             options={options}
             sx={{ width: 300 }}
+            onInputChange={(event, newInputValue) => {
+              setInputRemarks(newInputValue);
+            }}
             renderInput={(params) => (
               <TextField
                 {...params}

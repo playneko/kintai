@@ -4,13 +4,22 @@
   border: none;
   overflow-y: auto;
 }
+.home-alert {
+  margin-top: 25px;
+  margin-left: 25px;
+  margin-right: 25px;
+  font-weight: bold;
+}
+.home-alert > div {
+  font-weight: bold;
+}
 .home-container {
   /* top: 45px; */
   color: #646464;
   font-weight: bold;
   text-align: center;
   padding: 15px;
-  margin-top: 35px;
+  margin-top: 25px;
   margin-left: 25px;
   margin-right: 25px;
   border-radius: 7px;
@@ -44,4 +53,10 @@
 .home-bottom > div {
   margin: auto;
   margin-top: 10px;
+}
+.home-remarks-info {
+  color: #3c3c3c;
+  font-size: 14px;
+  text-align: left;
+  margin-left: 10px;
 }

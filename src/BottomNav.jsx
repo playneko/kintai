@@ -1,48 +1,40 @@
-import React, { useState } from "react";
-import { Link } from "react-router"
+import React from "react";
+import Box from '@mui/material/Box';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./assets/BottomNav.css";
 import "./components/FontAwesome";
 
 const BottomNav = () => {
-  // 현재 선택된 아이콘을 관리하는 state
-  const [activeNav, setActiveNav] = useState(1);
+  const navigate = useNavigate();
 
   return (
-    <nav className="wrapper">
-      <div>
-        <div>
-          <Link to="/home" className="nav-link" onClick={() => setActiveNav(1)}>
-            <div>
-              <FontAwesomeIcon
-                icon="home"
-                className={activeNav === 1 ? "nav-item active" : "nav-item"}
-              />
-            </div>
-          </Link>
-        </div>
-        <div>
-          <Link to="/kintai" className="nav-link" onClick={() => setActiveNav(2)}>
-            <div>
-              <FontAwesomeIcon
-                icon="calendar-days"
-                className={activeNav === 2 ? "nav-item active" : "nav-item"}
-              />
-            </div>
-          </Link>
-        </div>
-        <div>
-          <Link to="/third" className="nav-link" onClick={() => setActiveNav(3)}>
-            <div>
-              <FontAwesomeIcon
-                icon="upload"
-                className={activeNav === 3 ? "nav-item active" : "nav-item"}
-              />
-            </div>
-          </Link>
-        </div>
-      </div>
-    </nav>
+    <Box sx={{ width: '100%' }} className="bottom-nav">
+      <BottomNavigation
+        showLabels
+        onChange={(event, newValue) => {
+          switch (newValue) {
+            case 0:
+              navigate('/home');
+              break;
+            case 1:
+              navigate('/kintai');
+              break;
+            case 2:
+              navigate('/third');
+              break;
+            default:
+              break;
+          }
+        }}
+      >
+        <BottomNavigationAction icon={<FontAwesomeIcon icon="home" />} />
+        <BottomNavigationAction icon={<FontAwesomeIcon icon="calendar-days" />} />
+        <BottomNavigationAction icon={<FontAwesomeIcon icon="upload" />} />
+      </BottomNavigation>
+    </Box>
   );
 };
 
