@@ -23,7 +23,7 @@ const BottomNav = () => {
               navigate('/kintai');
               break;
             case 2:
-              navigate('/third');
+              navigate('/print');
               break;
             default:
               break;

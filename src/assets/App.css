@@ -6,3 +6,7 @@
 .error-text {
   color: red;
 }
+.login-container {
+  margin-top: 15vh;
+  text-align: center;
+}

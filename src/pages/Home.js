@@ -61,7 +61,6 @@ function Home() {
   }
 
   const initData = () => {
-    console.log('初期化');
     setInputStart('10:30');
     setInputEnd('19:00');
     setInputReset('1:00');
@@ -143,7 +142,7 @@ function Home() {
     setCalcDate(calcVal);
   }, [calendarData.thisDate, inputStart, inputEnd, inputReset, inputProduction]);
 
-  const options = ['午前休', '午後休', '全休', '早退', '遅刻', '電車遅延'];
+  const options = ['午前休', '午後休', '全休', '早退', '遅刻', '電車遅延', '体調不良', '私用'];
 
   return (
     <div className="home-main">
@@ -169,6 +168,7 @@ function Home() {
             <TextField
               id="outlined-multiline-flexible"
               margin="dense"
+              disabled
               defaultValue={inputDate(calendarData.thisDate)}
               slotProps={{
                 input: {

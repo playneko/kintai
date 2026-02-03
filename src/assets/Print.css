@@ -1,0 +1,71 @@
+.print-alert {
+  margin-top: 25px;
+  margin-left: 25px;
+  margin-right: 25px;
+  font-weight: bold;
+}
+.print-card-content:first-child {
+  margin: 0 auto;
+  margin-top: 30px;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: left;
+  justify-content: center;
+  /* background: #e4e4e4 !important; */
+}
+.print-card-content:nth-child(n+2) {
+  margin: 0 auto;
+  margin-top: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: left;
+  justify-content: center;
+  /* background: #e4e4e4 !important; */
+}
+.print-card-content-info {
+  margin: 0 auto;
+  margin-top: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: left;
+  justify-content: center;
+  background: #e4e4e4 !important;
+}
+.print-card-content svg {
+  color: #795548;
+  margin-right: 5px;
+}
+.print-card-content-info svg {
+  color: #ff6161;
+  margin-right: 5px;
+}
+.print-button {
+  margin: 0 auto;
+  margin-top: 20px;
+  text-align: center;
+}
+.print-total-time {
+  padding: 15px;
+  margin: 15px;
+  border-radius: 10px;
+  background: #f0b724;
+}
+.print-clock {
+  padding-right: 10px;
+}
+.print-time-text {
+  font-weight: bold;
+}
+.print-confirm {
+  background: #d4fe7e;
+}
+.print-submit-button {
+  margin: 0 auto;
+  margin-top: 20px;
+  text-align: center;
+}
+.print-loading {
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
