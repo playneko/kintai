@@ -5,20 +5,15 @@ const useAuthStore = create(
   persist(
     (set) => ({
       isLoggedIn: false,
-      login: () => {
-        const userLocalStorage = localStorage.getItem("accessToken");
+      uid: null,
+      setLogin: () => {
+        const userLocalStorage = localStorage.getItem("uid");
         if (userLocalStorage) {
-          set({ isLoggedIn: true });
+          set({ isLoggedIn: true, uid: userLocalStorage } );
         }
       },
-      kakaoLogin: () => {
-        const userLocalStorage = localStorage.getItem("accessToken");
-        if (userLocalStorage) {
-          set({ isLoggedIn: true });
-        }
-      },
-      logout: () => {
-        set({ isLoggedIn: false });
+      setLogout: () => {
+        set({ isLoggedIn: false, uid: null });
         localStorage.clear();
       },
     }),

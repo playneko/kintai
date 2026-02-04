@@ -10,3 +10,13 @@
   margin-top: 15vh;
   text-align: center;
 }
+.login-alert {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 30px;
+}
+.login-loading {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #555;
+}

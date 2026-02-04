@@ -82,7 +82,7 @@ function Print() {
           </Box>
         : lists.map((item, index) => {
           return (
-            <Card sx={{ maxWidth: 345 }} className="print-card-content" onClick={() => handleChangePage(item.date_year + item.date_month)}>
+            <Card sx={{ maxWidth: 345 }} className="print-card-content" onClick={() => handleChangePage(item.date_year + item.date_month)} key={index}>
               <CardContent>
                 {formatDate(item.date_year + item.date_month)}
               </CardContent>
