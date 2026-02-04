@@ -9,6 +9,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import CircularProgress from '@mui/material/CircularProgress';
 import useFetcher from '../hook/useFetcher';
 import useCalendarHook from '../hook/useCalendar';
+import useAuthStore from '../store/useAuthStore';
 import useCalendarStore from '../store/calendarStore';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import dayjs from 'dayjs';
@@ -29,6 +30,7 @@ function Home() {
   const [isUpdated, setIsUpdated] = useState(false);
   const [calcDate, setCalcDate] = useState();
 
+  const { uid } = useAuthStore();
   const calendarData = useCalendarStore((state) => state);
   const fetchData = useFetcher();
 
@@ -73,7 +75,7 @@ function Home() {
   // 勤怠登録/更新
   const fetchKintaiUpdate = async () => {
     const payload = {
-      uid: 'playneko',
+      uid: uid,
       date_year: dayjs(calendarData.thisDate).format('YYYY'),
       date_month: dayjs(calendarData.thisDate).format('MM'),
       date_day: dayjs(calendarData.thisDate).format('DD'),
@@ -100,7 +102,7 @@ function Home() {
   // 勤怠データ取得
   const fetchKintaiData = async () => {
     const payload = {
-      uid: 'playneko',
+      uid: uid,
       everyday: inputDate(calendarData.thisDate),
     };
 

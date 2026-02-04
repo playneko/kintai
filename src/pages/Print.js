@@ -5,6 +5,7 @@ import Alert from '@mui/material/Alert';
 import CardContent from '@mui/material/CardContent';
 import CircularProgress from '@mui/material/CircularProgress';
 import useFetcher from '../hook/useFetcher';
+import useAuthStore from '../store/useAuthStore';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import "../components/FontAwesome";
@@ -21,6 +22,7 @@ function Print() {
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState('');
   const [lists, setLists] = useState([]);
+  const { uid } = useAuthStore();
 
   const API_KINTAI_GET_DATE_URL = process.env.REACT_APP_API_KINTAI_GET_DATE_URL || process.env.API_KINTAI_GET_DATE_URL || '';
 
@@ -32,7 +34,7 @@ function Print() {
   // 勤怠データ取得
   const fetchKintaiData = async () => {
     const payload = {
-      uid: 'playneko',
+      uid: uid,
     };
 
     setLoading(true);

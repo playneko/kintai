@@ -30,7 +30,7 @@ function Login() {
       .then((data) => {
         if (data.success === true) {
           setLoading(false);
-          localStorage.setItem("uid", data.uid);
+          localStorage.setItem("uid", data.rows[0].uid);
           setLogin();
         } else {
           setMessage(data.msg || '認証に失敗しました。');

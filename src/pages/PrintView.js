@@ -12,6 +12,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import useFetcher from '../hook/useFetcher';
 import useCalendarHook from '../hook/useCalendar';
+import useAuthStore from '../store/useAuthStore';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import dayjs from 'dayjs';
@@ -33,6 +34,7 @@ function PrintView() {
   const [message, setMessage] = useState('');
   const [lists, setLists] = useState([]);
   const [totalTime, setTotalTime] = useState('00:00');
+  const { uid } = useAuthStore();
 
   const REACT_APP_API_KINTAI_GET_DETAIL_URL = process.env.REACT_APP_API_KINTAI_GET_DETAIL_URL || process.env.API_KINTAI_GET_DETAIL_URL || '';
   const REACT_APP_API_KINTAI_SUBMIT_URL = process.env.REACT_APP_API_KINTAI_SUBMIT_URL || process.env.API_KINTAI_SUBMIT_URL || '';
@@ -61,7 +63,7 @@ function PrintView() {
   // 勤怠データ取得
   const fetchKintaiData = async () => {
     const payload = {
-      uid: 'playneko',
+      uid: uid,
       date_year: dayjs(postId).format("YYYY"),
       date_month: dayjs(postId).format("MM")
     };
@@ -96,7 +98,7 @@ function PrintView() {
     // eslint-disable-next-line no-restricted-globals
     if (confirm('勤務表を提出します。よろしいですか？') === true) {
       const payload = {
-        uid: 'playneko',
+        uid: uid,
         everyday: thisDate
       };
 
@@ -125,7 +127,7 @@ function PrintView() {
     // eslint-disable-next-line no-restricted-globals
     if (confirm('勤務表をExcelで出力します。よろしいですか？') === true) {
       const payload = {
-        uid: 'playneko',
+        uid: uid,
         everyday: thisDate
       };
 

@@ -7,6 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import CalendarNav from "../components/CalendarNav";
 import useFetcher from '../hook/useFetcher';
 import useCalendarHook from '../hook/useCalendar';
+import useAuthStore from '../store/useAuthStore';
 import useCalendarStore from '../store/calendarStore';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -30,6 +31,7 @@ function Kintai() {
   const [isUpdated, setIsUpdated] = useState(false);
   const [isConfirm, setConfirm] = useState(false);
   const [calcDate, setCalcDate] = useState();
+  const { uid } = useAuthStore();
   const calendarData = useCalendarStore((state) => state);
 
   const API_KINTAI_GET_URL = process.env.REACT_APP_API_KINTAI_GET_URL || process.env.API_KINTAI_GET_URL || '';
@@ -56,7 +58,7 @@ function Kintai() {
   // 勤怠登録/更新
   const fetchKintaiUpdate = async (URL) => {
     const payload = {
-      uid: 'playneko',
+      uid: uid,
       everyday: inputDate(calendarData.thisDate)
     };
 
@@ -85,7 +87,7 @@ function Kintai() {
   // 勤怠データ取得
   const fetchKintaiData = async () => {
     const payload = {
-      uid: 'playneko',
+      uid: uid,
       everyday: inputDate(calendarData.thisDate),
     };
 
