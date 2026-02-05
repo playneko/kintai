@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter as BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import HeaderNav from "./HeaderNav";
 import BottomNav from "./BottomNav";
@@ -40,7 +40,7 @@ function App() {
   };
 
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter>
       <ThemeProvider theme={theme}>
         <HeaderNav />
         {
