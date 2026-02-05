@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/kintai/static/css/main.69bfb99d.css",
-    "main.js": "/kintai/static/js/main.57b4ac6b.js",
+    "main.js": "/kintai/static/js/main.da13a090.js",
     "static/js/453.0631994c.chunk.js": "/kintai/static/js/453.0631994c.chunk.js",
     "index.html": "/kintai/index.html",
     "main.69bfb99d.css.map": "/kintai/static/css/main.69bfb99d.css.map",
-    "main.57b4ac6b.js.map": "/kintai/static/js/main.57b4ac6b.js.map",
+    "main.da13a090.js.map": "/kintai/static/js/main.da13a090.js.map",
     "453.0631994c.chunk.js.map": "/kintai/static/js/453.0631994c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.69bfb99d.css",
-    "static/js/main.57b4ac6b.js"
+    "static/js/main.da13a090.js"
   ]
 }
